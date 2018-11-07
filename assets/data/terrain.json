@@ -1,0 +1,14 @@
+{
+  "block": {
+    "water": "tank",
+    "wall": "bullet",
+    "crate": "tank"
+  },
+  "rotations": {
+    "wall": [0, 90],
+    "wallcorner": [0, 90, 180, 270],
+    "path": [0, 90],
+    "pathcorner": [0,90,180,270],
+    "bridge": [0,90]
+  }
+}
