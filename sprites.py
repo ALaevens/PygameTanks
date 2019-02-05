@@ -63,6 +63,8 @@ class Tank(pygame.sprite.Sprite):
         self.build()
         self.tasks = []
 
+        self.change = 0
+
     def build(self):
         base = pygame.Surface(scalePx((16,16),scale),pygame.SRCALPHA)
         base.blit(self.images["track"], scalePx((2, 3), scale),
@@ -106,16 +108,11 @@ class Tank(pygame.sprite.Sprite):
                 self.moveTrack(1, 1)
             elif task == "turnLeft":
                 change = self.baseTurnSpeed*(ms/1000)
-                self.direction += change
-                self.aim += change
-                self.clippedDirection = self.clipDirection(self.direction)
-                self.moveTrack(1, -1)
+                self.updateRot(change)
+
             elif task == "turnRight":
                 change = -1 *self.baseTurnSpeed * (ms / 1000)
-                self.direction+=change
-                self.aim += change
-                self.clippedDirection = self.clipDirection(self.direction)
-                self.moveTrack(-1, 1)
+                self.updateRot(change)
             elif task == "aimLeft":
                 change = self.baseAimSpeed * (ms / 1000)
                 self.aim += change
@@ -172,6 +169,16 @@ class Tank(pygame.sprite.Sprite):
             self.rect.centery = oldPos[1]
             self.accuratePos = (self.accuratePos[0],oldPos[1])
 
+    def updateRot(self, change):
+        self.change = change
+        self.direction += change
+        self.aim += change
+        self.clippedDirection = self.clipDirection(self.direction)
+        if change > 0:
+            self.moveTrack(1, -1)
+        elif change < 0:
+            self.moveTrack(-1, 1)
+
     def update(self,ms):
         self.velocity.x = 0
         self.velocity.y = 0
@@ -179,6 +186,13 @@ class Tank(pygame.sprite.Sprite):
         self.handleTasks(ms)
 
         self.build()
+
+        point = pygame.sprite.collide_mask(self, tankMask.sprite)
+        tanksHit = pygame.sprite.spritecollide(self, tanks, False,
+                                               pygame.sprite.collide_mask)
+        if point is not None or len(tanksHit) > 1:
+            self.updateRot(self.change*-1)
+            self.build()
         self.drawHealthBar()
 
         dx = self.velocity.x * (ms / 1000) * scale
