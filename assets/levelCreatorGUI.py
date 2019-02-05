@@ -134,6 +134,7 @@ selectedBlock = None
 rotationIndex = 0
 rotations = [0]
 
+
 while True:
     events = pygame.event.get()
     for event in events:
