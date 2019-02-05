@@ -8,6 +8,7 @@ pygame.init()
 scale = 4
 allImages = {}
 
+
 airParticles = pygame.sprite.Group()
 groundParticles = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
@@ -16,6 +17,12 @@ tanks = pygame.sprite.Group()
 bulletMask = pygame.sprite.GroupSingle()
 tankMask = pygame.sprite.GroupSingle()
 
+bgRect = None
+def reset():
+    airParticles.empty()
+    groundParticles.empty()
+    bullets.empty()
+    tanks.empty()
 
 class Tank(pygame.sprite.Sprite):
     baseSpeed = 40
@@ -150,7 +157,8 @@ class Tank(pygame.sprite.Sprite):
 
         point = pygame.sprite.collide_mask(self,tankMask.sprite)
         tanksHit = pygame.sprite.spritecollide(self,tanks,False,pygame.sprite.collide_mask)
-        if point is not None or len(tanksHit)>1:
+        halfSize = self.rect.width//2
+        if point is not None or len(tanksHit)>1 or not contains(self.rect.centerx, bgRect.left+halfSize, bgRect.right-halfSize):
             self.rect.centerx = oldPos[0]
             self.accuratePos = (oldPos[0],self.accuratePos[1])
 
@@ -160,7 +168,7 @@ class Tank(pygame.sprite.Sprite):
 
         point = pygame.sprite.collide_mask(self, tankMask.sprite)
         tanksHit = pygame.sprite.spritecollide(self, tanks, False, pygame.sprite.collide_mask)
-        if point is not None or len(tanksHit)>1:
+        if point is not None or len(tanksHit)>1 or not contains(self.rect.centery, bgRect.top+halfSize, bgRect.bottom-halfSize):
             self.rect.centery = oldPos[1]
             self.accuratePos = (self.accuratePos[0],oldPos[1])
 

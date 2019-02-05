@@ -1,0 +1,19 @@
+Controls for Tanks:
+As for now the tanks are keyboard controlled. Both players use the same keyboard to play.
+
+The controls have three groups:
+    Movement, Relative Aim, and Fire
+
+Player 1:
+    Movement: W, A, S, D
+    Relative Aim: Q, E
+    Fire: F
+
+Player 2:
+    Movement: I, J, K, L
+    Relative Aim: U, O
+    Fire: H
+
+You can quit the game at any time by pressing ESC
+
+You can skip any 'level' by pressing Right Arrow

@@ -1,7 +1,6 @@
 import pickle, sys, os, json
+sys.path.append("..")
 import pygame
-import threading
-from pygame.locals import *
 import gameutils
 import gameobjects
 
@@ -186,7 +185,7 @@ while True:
                     rotationIndex = 0
 
     if pygame.mouse.get_pressed()[2] and not mouseHeld[2]:
-        rotationIndex += 1
+        rotationIndex -= 1
         rotationIndex = rotationIndex%len(rotations)
         mouseHeld[2] = 1
 

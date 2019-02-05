@@ -17,7 +17,7 @@ colors = {
     "LBLUE": (0, 97, 255),
     "DBLUE": (0, 0, 114),
     "MAGENTA": (183, 0, 159),
-    "SKYBLUE": (9, 16, 28)
+    "SKYBLUE": (135, 206, 235)
 }
 
 def loadImage(filename, loaded_images, colorKey=None, scale=None):
@@ -114,3 +114,17 @@ def checkAlive(spriteGroup):
         if sprite.alive:
             aliveList.append(sprite)
     return aliveList
+
+def constrain(val, min_val, max_val):
+    if val < min_val:
+        return min_val
+    elif val > max_val:
+        return max_val
+    else:
+        return val
+
+def contains(val, left, right):
+    if left <= val <= right:
+        return True
+    else:
+        return False

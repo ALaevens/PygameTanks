@@ -221,9 +221,4 @@ def updateAll(objects, events, surf,rect):
     for obj in objects:
         obj.update(events, surf, rect)
 
-def get_key(events):
-    pressed = None
-    for event in events:
-        if event.type == pygame.KEYDOWN:
-            pressed = [pygame.key.name(event.key),event.unicode]
-    return pressed
+
