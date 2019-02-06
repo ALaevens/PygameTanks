@@ -1,6 +1,8 @@
 {
   "block": {
     "water": "tank",
+    "watercornercw": "tank",
+    "watercornerccw": "tank",
     "wall": "bullet",
     "crate": "tank"
   },
@@ -9,6 +11,9 @@
     "wallcorner": [0, 90, 180, 270],
     "path": [0, 90],
     "pathcorner": [0,90,180,270],
-    "bridge": [0,90]
+    "bridge": [0,90],
+    "water": [0, 90, 180, 270],
+    "watercornerccw": [0, 90, 180, 270],
+    "watercornercw": [0, 90, 180, 270]
   }
 }

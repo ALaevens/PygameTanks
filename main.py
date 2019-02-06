@@ -116,7 +116,7 @@ def controls():
     gui = [backButton]
 
     textLayer = pygame.Surface(displaySize, SRCALPHA)
-    textWriter = gameobjects.ScreenText()
+    textWriter = gameobjects.ScreenText(size=25)
     textWriter.startingPoint(0,0)
     with open("assets//data//controls.txt") as f:
         for line in f:
