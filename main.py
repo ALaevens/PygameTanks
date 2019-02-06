@@ -42,7 +42,7 @@ def game(level):
     sprites.bulletMask.add(sprites.Mask(bgRect, bMask))
     sprites.tankMask.add(sprites.Mask(bgRect, tMask))
 
-    keys = [[K_w,K_s,K_a,K_d,K_q,K_e,K_f],[K_i,K_k,K_j,K_l,K_u,K_o,K_h]]
+    keys = [[K_w, K_s, K_a, K_d, K_q, K_e, K_f], [K_i, K_k, K_j, K_l, K_u, K_o, K_h]]
     players = []
     fpsUpdate = 0
 
@@ -158,11 +158,10 @@ def menu():
     startButton = gameobjects.Button("Start", 1*displaySize[0]//3, 2*displaySize[1]//3,
                                      displaySize[0]//4)
     helpButton = gameobjects.Button("Controls", 2 * displaySize[0]//3,
-                                     2*displaySize[1]//3, displaySize[0]//4,
-                                    colors=(colors["DRED"],colors["LRED"], colors["BLACK"]))
+                                    2*displaySize[1]//3, displaySize[0]//4,
+                                    colors=(colors["DRED"], colors["LRED"], colors["BLACK"]))
     gui = [startButton, helpButton]
 
-    numlevels = len(os.listdir("assets//data//levels"))
     while True:
         events = pygame.event.get()
         for event in events:
@@ -179,7 +178,7 @@ def menu():
         DISPLAYSURF.blit(title, titleRect)
 
         if startButton.active:
-            for i in range(1, numlevels+1):
+            for i in os.listdir("assets//data//levels"):
                 game(i)
             startButton.active = False
 

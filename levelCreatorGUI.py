@@ -1,5 +1,4 @@
 import pickle, sys, os, json
-sys.path.append("..")
 import pygame
 import gameutils
 import gameobjects
@@ -65,7 +64,7 @@ def drawLevel(height):
                                                       (blockSize, blockSize)), (x * blockSize, y * blockSize))
 
 def buildPalette():
-    terrainPath = ".//images//terrain"
+    terrainPath = ".//assets//images//terrain"
     paletteItems = ["delete"]
     palette.fill((100,100,100))
     for file in os.listdir(terrainPath):
@@ -85,7 +84,7 @@ global filePath, xSize, ySize, worldArray, metaArray
 
 def load():
     global filePath, xSize, ySize, worldArray, metaArray
-    filePath = filedialog.askopenfilename(initialdir="data//levels", title="Select file", filetypes=(("level files", "*.lvl"),))
+    filePath = filedialog.askopenfilename(initialdir="assets//data//levels", title="Select file", filetypes=(("level files", "*.lvl"),))
     root.destroy()
     with open(filePath, "rb") as f:
         worldData = pickle.load(f)
@@ -98,8 +97,8 @@ def load():
 
 def newlevel():
     global filePath, xSize, ySize, worldArray, metaArray
-    filePath = filedialog.asksaveasfilename(initialdir="data//levels",
-                                          title="Select file",
+    filePath = filedialog.asksaveasfilename(initialdir="assets//data//levels",
+                                          title="Save As",
                                           filetypes=(("level files", "*.lvl"),))
 
     if filePath[len(filePath)-4:len(filePath)] != ".lvl":
@@ -136,8 +135,8 @@ else:
 DISPLAYSURF = pygame.display.set_mode((1000,600), pygame.DOUBLEBUF)
 
 images = {}
-gameutils.loadImageDirectory(images,".//images//terrain",".png")
-gameutils.loadImageDirectory(images,".//images//editor",".png")
+gameutils.loadImageDirectory(images,"assets//images//terrain",".png")
+gameutils.loadImageDirectory(images,"assets//images//editor",".png")
 
 metaItems = ["metadelete","spawn1", "spawn2", "spawn3", "spawn4"]
 
@@ -156,7 +155,7 @@ fillButton = gameobjects.Button("Fill",250,10,height=30,centered=False,colors=((
 saveButton = gameobjects.Button("Save",450,10,height=30,centered=False)
 GUI = [slider,fillButton,saveButton]
 
-with open(".//data//terrain.json") as f:
+with open(".//assets//data//terrain.json") as f:
     jsonData = json.load(f)
 
 mouseHeld = [0,0,0]

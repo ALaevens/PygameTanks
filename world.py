@@ -22,7 +22,7 @@ def buildLevel(levelID):
 
     resolution = pygame.display.get_surface().get_size()
     displayRatio = resolution[0]/resolution[1]
-    path = './/assets//data//levels//{}.lvl'.format(levelID)
+    path = './/assets//data//levels//{}'.format(levelID)
 
     levelF = open(path,"rb")
     levelData = pickle.load(levelF)

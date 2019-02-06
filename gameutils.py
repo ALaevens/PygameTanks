@@ -41,6 +41,7 @@ def loadImage(filename, loaded_images, colorKey=None, scale=None):
 
 def loadImageDirectory(loaded_images, directory, imType):
     # print("Loading Directory...." + directory)
+    print(os.getcwd())
     for file in os.listdir(directory):
         checkFolder = file.split(".")
         if len(checkFolder) <= 2:
