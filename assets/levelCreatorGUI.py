@@ -3,6 +3,8 @@ sys.path.append("..")
 import pygame
 import gameutils
 import gameobjects
+from tkinter import filedialog
+from tkinter import *
 
 pygame.init()
 
@@ -78,20 +80,49 @@ def buildPalette():
         palette.blit(pygame.transform.scale(images[paletteItems[i]+".png"],(pblockSize,pblockSize)),(x*pblockSize,y*pblockSize))
     return paletteItems
 
-mode,fileName = input("mode flename: ").split()
-if mode.lower() == "new":
-    xSize = int(input("X Size: "))
-    ySize = int(input("Y Size: "))
-    worldArray = makeArray(xSize, ySize)
-    metaArray = makeMetaArray(xSize, ySize)
-elif mode.lower() == "load":
-    with open(".//data//levels//{}.lvl".format(fileName), "rb") as f:
+global filePath, xSize, ySize, worldArray, metaArray
+
+
+def load():
+    global filePath, xSize, ySize, worldArray, metaArray
+    filePath = filedialog.askopenfilename(initialdir="data//levels", title="Select file", filetypes=(("level files", "*.lvl"),))
+    root.destroy()
+    with open(filePath, "rb") as f:
         worldData = pickle.load(f)
         print(worldData[1])
         worldArray = worldData[0]
         ySize = len(worldArray)
         xSize = len(worldArray[0])
         metaArray = convertMetaIn(xSize, ySize, worldData[1])
+
+
+def newlevel():
+    global filePath, xSize, ySize, worldArray, metaArray
+    filePath = filedialog.asksaveasfilename(initialdir="data//levels",
+                                          title="Select file",
+                                          filetypes=(("level files", "*.lvl"),))
+
+    if filePath[len(filePath)-4:len(filePath)] != ".lvl":
+        filePath += ".lvl"
+    xSize = int(selX.get())
+    ySize = int(selY.get())
+    root.destroy()
+
+    worldArray = makeArray(xSize, ySize)
+    metaArray = makeMetaArray(xSize, ySize)
+
+root = Tk()
+
+title = Label(root, text = '''Tank Game Level Creator''').grid(row=0,column=0, columnspan=4)
+LX = Label(root, text = "x size").grid(row=1,column=0)
+selX = Spinbox(root, from_ = 2, to = 30, width=4)
+selX.grid(row=1,column=1)
+LY = Label(root, text = "y size").grid(row=2,column=0)
+selY = Spinbox(root, from_ = 1, to = 20,width = 4)
+selY.grid(row=2,column=1)
+newButton = Button(root, text = "New",width=10, command=newlevel).grid(row=3,column=0,columnspan=2)
+loadButton = Button(root, text = "Load", width=10, command=load).grid(row=3,column=2,columnspan=2)
+root.mainloop()
 
 largestSide = max(xSize,ySize)
 levelRatio = xSize/ySize
@@ -198,7 +229,7 @@ while True:
 
     if saveButton.active:
         print("Clicked")
-        with open(".//data//levels//{}.lvl".format(fileName), "wb") as f:
+        with open(filePath, "wb") as f:
             levelData = [worldArray,convertMetaOut(metaArray)]
             pickle.dump(levelData, f)
 

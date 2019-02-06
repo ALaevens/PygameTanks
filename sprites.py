@@ -64,6 +64,7 @@ class Tank(pygame.sprite.Sprite):
         self.tasks = []
 
         self.change = 0
+        self.rebuild = True
 
     def build(self):
         base = pygame.Surface(scalePx((16,16),scale),pygame.SRCALPHA)
@@ -96,7 +97,9 @@ class Tank(pygame.sprite.Sprite):
             self.tasks.append(toDo)
 
     def handleTasks(self,ms):
+        self.rebuild = False
         while len(self.tasks) > 0:
+            self.rebuild = True
             task = self.tasks.pop(0)
             if task == "forward":
                 self.velocity.angle = self.clippedDirection
@@ -185,14 +188,15 @@ class Tank(pygame.sprite.Sprite):
 
         self.handleTasks(ms)
 
-        self.build()
-
-        point = pygame.sprite.collide_mask(self, tankMask.sprite)
-        tanksHit = pygame.sprite.spritecollide(self, tanks, False,
-                                               pygame.sprite.collide_mask)
-        if point is not None or len(tanksHit) > 1:
-            self.updateRot(self.change*-1)
+        if self.rebuild:
             self.build()
+
+            point = pygame.sprite.collide_mask(self, tankMask.sprite)
+            tanksHit = pygame.sprite.spritecollide(self, tanks, False,
+                                                   pygame.sprite.collide_mask)
+            if point is not None or len(tanksHit) > 1:
+                self.updateRot(self.change*-1)
+                self.build()
         self.drawHealthBar()
 
         dx = self.velocity.x * (ms / 1000) * scale
@@ -232,8 +236,7 @@ class Bullet(pygame.sprite.Sprite):
         dy = self.velocity * scale * math.sin(math.radians(self.dir)) * (self.flightMs / 1000)
         self.rect.center = (self.startPos[0] + dx, self.startPos[1] - dy)
 
-        if self.rect.right < 0 or self.rect.left > pygame.display.get_surface().get_width() or \
-                self.rect.bottom < 0 or self.rect.top > pygame.display.get_surface().get_height():
+        if not bgRect.contains(self.rect):
             self.kill()
 
         collidedBullets = pygame.sprite.spritecollide(self, bullets, False)
