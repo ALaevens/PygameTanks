@@ -114,7 +114,7 @@ root = Tk()
 
 title = Label(root, text = '''Tank Game Level Creator''').grid(row=0,column=0, columnspan=4)
 LX = Label(root, text = "x size").grid(row=1,column=0)
-selX = Spinbox(root, from_ = 2, to = 30, width=4)
+selX = Spinbox(root, from_ = 2, to = 32, width=4)
 selX.grid(row=1,column=1)
 LY = Label(root, text = "y size").grid(row=2,column=0)
 selY = Spinbox(root, from_ = 1, to = 20,width = 4)
@@ -133,6 +133,8 @@ else:
     blockSize = int(550/ySize)
 
 DISPLAYSURF = pygame.display.set_mode((1000,600), pygame.DOUBLEBUF)
+pygame.display.set_icon(pygame.image.load("assets//images//extra//editoricon.png"))
+pygame.display.set_caption("Level Editor")
 
 images = {}
 gameutils.loadImageDirectory(images,"assets//images//terrain",".png")

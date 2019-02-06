@@ -193,6 +193,7 @@ def menu():
 if __name__ == "__main__":
     DISPLAYSURF = pygame.display.set_mode((1280,720), DOUBLEBUF)
     pygame.display.set_caption('Tanks')
+    pygame.display.set_icon(pygame.image.load("assets//images//extra//gameicon.png"))
     loadImageDirectory(sprites.allImages,"assets//images//sprite",".png")
     loadImageDirectory(world.terrain_images,"assets//images//terrain",".png")
 
